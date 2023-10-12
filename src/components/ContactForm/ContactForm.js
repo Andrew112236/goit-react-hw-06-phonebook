@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styles from './ContactForm.module.css';
-function ContactForm({ onSubmit }) {
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, getContacts } from 'Redux/contactSlice';
+import { nanoid } from '@reduxjs/toolkit';
+
+function ContactForm() {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -12,9 +18,21 @@ function ContactForm({ onSubmit }) {
     }
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    onSubmit({ name, number });
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if (contacts.find(contact => contact.name === name)) {
+      window.alert(`${name} is already in your contacts`);
+      return;
+    }
+    dispatch(
+      addContact({
+        name: name,
+        number,
+        id: nanoid(),
+      })
+    );
+
     setName('');
     setNumber('');
   };
