@@ -1,26 +1,32 @@
 import React from 'react';
 import styles from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact, getContacts } from '../../Redux/contactSlice';
-import { getFilter } from 'Redux/filterSlice';
+import { deleteContact } from '../../Redux/contactSlice';
+import { getFilter, getContacts } from 'Redux/store';
+import { Notify } from 'notiflix';
 
 export default function ContactList() {
-  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
-  const filtered = useSelector(getFilter);
-  const normalizedFilter = filtered.toLowerCase();
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
-  const filterContacts = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(normalizedFilter)
+  const filterContact = contacts.filter(contact =>
+    contact.name.toLowerCase().trim().includes(filter.toLowerCase())
   );
 
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
+  if (filter.toLowerCase() && !filterContact.length) {
+    Notify.warning('No contacts matching your request', {
+      position: 'center-center',
+    });
+  }
+
+  const handleDelete = contactId => {
+    dispatch(deleteContact(contactId));
   };
 
   return (
     <ul>
-      {filterContacts.map(({ id, name, number }) => (
+      {filterContact.map(({ id, name, number }) => (
         <li key={id} className={styles.label}>
           <p>
             {name}: {number}

@@ -1,51 +1,53 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-// Initial state of contacts
+// initial state
 const contactInitialState = {
   items: [
-    { id: 'id-1', name: 'Andrew Marchel', number: '459-12-56' },
-    { id: 'id-2', name: 'Emanuel Francois', number: '443-89-12' },
-    { id: 'id-3', name: 'Adonis Silviu', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    { id: nanoid(7), name: 'Andrew Marchel', number: '459-12-56' },
+    { id: nanoid(7), name: 'Emanuel Francois', number: '443-89-12' },
+    { id: nanoid(7), name: 'Adonis Silviu', number: '645-17-79' },
+    { id: nanoid(7), name: 'Annie Copeland', number: '227-91-26' },
   ],
+  filter: '',
 };
 
-// Slice definition
+//Slice creator for addContact and deleteContact
 const contactSlice = createSlice({
-  name: 'contacts',
+  name: 'phoneBookMark',
   initialState: contactInitialState,
   reducers: {
-    addContact(state, action) {
-      state.items.unshift(action.payload);
+    addContact: {
+      reducer(state, action) {
+        state.items.unshift(action.payload);
+      },
+      prepare(name, number) {
+        return {
+          payload: {
+            id: nanoid(7),
+            name,
+            number,
+          },
+        };
+      },
     },
-
-    deleteContact(state, action) {
-      state.items = state.items.filter(
-        contact => contact.id !== action.payload
-      );
+    deleteContact: {
+      reducer(state, action) {
+        state.items = state.items.filter(
+          contact => contact.id !== action.payload
+        );
+      },
+      prepare(contactId) {
+        return {
+          payload: contactId,
+        };
+      },
+    },
+    filterContact(state, action) {
+      state.filter = action.payload;
     },
   },
 });
 
-// Persisting data
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['filter'],
-};
-
-// Reducer
-export const persistedContactReducer = persistReducer(
-  persistConfig,
-  contactSlice.reducer
-);
-
-export const { addContact, deleteContact } = contactSlice.actions;
-
-export const getContacts = state => state.contacts.items;
-
-const contactsReducer = contactSlice.reducer;
-
-export default contactsReducer;
+export const { addContact, deleteContact, filterContact } =
+  contactSlice.actions;
+export const contactSliceReducer = contactSlice.reducer;

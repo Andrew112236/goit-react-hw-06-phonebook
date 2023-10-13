@@ -1,30 +1,18 @@
 import ContactList from '../components/ContactList/ContactList';
 import Filter from '../components/Filter/Filter';
 import ContactForm from '../components/ContactForm/ContactForm';
-import { useSelector } from 'react-redux';
-import { getContacts } from 'Redux/contactSlice';
-import { getFilter } from 'Redux/filterSlice';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 
-const App = () => {
-  const contacts = useSelector(state => getContacts(state.contacts));
-  const filtered = useSelector(state => getFilter(state.filter));
-
-  const filterContact = e => {
-    const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filtered.toLowerCase())
-    );
-    return filteredContacts;
-  };
+export const App = () => {
+  const contacts = useSelector(state => state.contacts);
+  console.log(contacts);
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm />
-      <h2>Contacts</h2>
       <Filter />
-      <ContactList listContact={filterContact()} />
+      <ContactList />
     </div>
   );
 };
-
-export default App;
