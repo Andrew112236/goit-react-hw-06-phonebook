@@ -2,19 +2,21 @@ import React from 'react';
 import styles from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from '../../Redux/contactSlice';
-import { getFilter, getContacts } from 'Redux/store';
+import { getFilter, getContacts } from '../../Redux/store';
 import { Notify } from 'notiflix';
 
-export default function ContactList() {
+export function ContactList() {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
-  const filterContact = contacts.filter(contact =>
+  console.log(filter);
+
+  const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().trim().includes(filter.toLowerCase())
   );
 
-  if (filter.toLowerCase() && !filterContact.length) {
+  if (filter.toLowerCase() && !filteredContacts.length) {
     Notify.warning('No contacts matching your request', {
       position: 'center-center',
     });
@@ -26,7 +28,7 @@ export default function ContactList() {
 
   return (
     <ul>
-      {filterContact.map(({ id, name, number }) => (
+      {filteredContacts.map(({ id, name, number }) => (
         <li key={id} className={styles.label}>
           <p>
             {name}: {number}

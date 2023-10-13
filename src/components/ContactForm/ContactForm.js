@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'Redux/contactSlice';
 import { nanoid } from '@reduxjs/toolkit';
 
-function ContactForm() {
+export function ContactForm() {
   const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
   const [name, setName] = useState('');
@@ -75,5 +75,3 @@ function ContactForm() {
     </form>
   );
 }
-
-export default ContactForm;

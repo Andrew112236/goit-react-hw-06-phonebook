@@ -1,6 +1,6 @@
-import ContactList from '../components/ContactList/ContactList';
-import Filter from '../components/Filter/Filter';
-import ContactForm from '../components/ContactForm/ContactForm';
+import { ContactList } from '../components/ContactList/ContactList';
+import { Filter } from '../components/Filter/Filter';
+import { ContactForm } from '../components/ContactForm/ContactForm';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 export const App = () => {
@@ -8,11 +8,10 @@ export const App = () => {
   console.log(contacts);
 
   return (
-    <div>
-      <h1>Phonebook</h1>
+    <>
       <ContactForm />
       <Filter />
       <ContactList />
-    </div>
+    </>
   );
 };

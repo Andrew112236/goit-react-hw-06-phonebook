@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import filterContact from '../../Redux/Filter';
 import { getFilter } from 'Redux/store';
 
-export default function Filter() {
+export function Filter() {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
