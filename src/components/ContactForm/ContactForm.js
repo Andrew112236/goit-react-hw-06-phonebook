@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styles from './ContactForm.module.css';
+import { useState } from 'react';
+import styles from '../../components/ContactForm/ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, getContacts } from 'Redux/contactSlice';
 import { nanoid } from '@reduxjs/toolkit';
@@ -9,14 +9,6 @@ function ContactForm() {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
-  const handleChange = event => {
-    if (event.target.name === 'name') {
-      setName(event.target.value);
-    } else if (event.target.name === 'number') {
-      setNumber(event.target.value);
-    }
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -35,6 +27,22 @@ function ContactForm() {
 
     setName('');
     setNumber('');
+  };
+
+  const handleChange = e => {
+    const { value, name } = e.target;
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+
+      default:
+        return;
+    }
   };
 
   return (

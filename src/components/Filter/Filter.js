@@ -14,7 +14,7 @@ export default function Filter() {
     <div>
       <label className={styles.label}>
         Filter contacts by name:
-        <input type="text" name={filter} value={filter} onChange={onChange} />
+        <input type="text" name="filter" value={filter} onChange={onChange} />
       </label>
     </div>
   );

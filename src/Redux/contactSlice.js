@@ -17,10 +17,11 @@ const contactSlice = createSlice({
   name: 'contacts',
   initialState: contactInitialState,
   reducers: {
-    addContact: (state, action) => {
+    addContact(state, action) {
       state.items.unshift(action.payload);
     },
-    deleteContact: (state, action) => {
+
+    deleteContact(state, action) {
       state.items = state.items.filter(
         contact => contact.id !== action.payload
       );
@@ -30,7 +31,7 @@ const contactSlice = createSlice({
 
 // Persisting data
 const persistConfig = {
-  key: 'contacts',
+  key: 'root',
   storage,
   blacklist: ['filter'],
 };

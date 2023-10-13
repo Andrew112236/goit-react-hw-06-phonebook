@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact, getContacts } from 'Redux/contactSlice';
+import { deleteContact, getContacts } from '../../Redux/contactSlice';
 import { getFilter } from 'Redux/filterSlice';
 
 export default function ContactList() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
   const filtered = useSelector(getFilter);
+  const normalizedFilter = filtered.toLowerCase();
 
   const filterContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(normalizedFilter)
@@ -17,7 +18,6 @@ export default function ContactList() {
     dispatch(deleteContact(id));
   };
 
-  const normalizedFilter = filtered.toLowerCase();
   return (
     <ul>
       {filterContacts.map(({ id, name, number }) => (
