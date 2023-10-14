@@ -14,7 +14,7 @@ export function ContactList() {
     contact.name.toLowerCase().trim().includes(filter.toLowerCase())
   );
 
-  if (filter.toLowerCase() && !filteredContacts.length) {
+  if (!filteredContacts?.length && filter.toLowerCase()) {
     Notify.warning('No contacts matching your request', {
       position: 'center-center',
     });

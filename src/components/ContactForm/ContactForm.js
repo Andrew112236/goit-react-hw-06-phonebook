@@ -13,12 +13,12 @@ export function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (
-      Array.isArray(contacts) &&
-      contacts.find(contact => contact.name === name)
-    ) {
-      window.alert(`${name} is already in your contacts`);
-      return;
+    if (Array.isArray(contacts)) {
+      const contactExists = contacts.some(contact => contact?.name === name);
+      if (contactExists) {
+        window.alert(`${name} is already in your contacts`);
+        return;
+      }
     }
 
     dispatch(

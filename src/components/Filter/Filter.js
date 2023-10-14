@@ -1,16 +1,16 @@
 import React from 'react';
 import styles from './Filter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import filterContact from '../../Redux/Filter';
-import { getFilter } from 'Redux/store';
+import { setFilter } from '../../Redux/Filter';
 
 export function Filter() {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
 
   const onChange = e => {
-    dispatch(filterContact(e.target.value));
+    dispatch(setFilter(e.target.value));
   };
+
   return (
     <div>
       <label className={styles.label}>
