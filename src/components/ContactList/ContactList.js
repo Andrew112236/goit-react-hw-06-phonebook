@@ -10,9 +10,7 @@ export function ContactList() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
-  console.log(filter);
-
-  const filteredContacts = contacts.filter(contact =>
+  const filteredContacts = contacts?.filter(contact =>
     contact.name.toLowerCase().trim().includes(filter.toLowerCase())
   );
 
@@ -28,7 +26,7 @@ export function ContactList() {
 
   return (
     <ul>
-      {filteredContacts.map(({ id, name, number }) => (
+      {filteredContacts?.map(({ id, name, number }) => (
         <li key={id} className={styles.label}>
           <p>
             {name}: {number}

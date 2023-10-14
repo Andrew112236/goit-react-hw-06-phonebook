@@ -13,14 +13,18 @@ export function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (contacts.find(contact => contact.name === name)) {
+    if (
+      Array.isArray(contacts) &&
+      contacts.find(contact => contact.name === name)
+    ) {
       window.alert(`${name} is already in your contacts`);
       return;
     }
+
     dispatch(
       addContact({
         name: name,
-        number,
+        number: number,
         id: nanoid(),
       })
     );
