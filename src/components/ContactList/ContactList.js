@@ -1,8 +1,11 @@
 import React from 'react';
 import styles from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../Redux/contactSlice';
-import { getFilter, getContacts } from '../../Redux/store';
+import {
+  getFilter,
+  deleteContact,
+  getContacts,
+} from '../../Redux/contactSlice';
 import { Notify } from 'notiflix';
 
 export function ContactList() {
@@ -10,15 +13,22 @@ export function ContactList() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
-  const filteredContacts = contacts?.filter(contact =>
-    contact.name.toLowerCase().trim().includes(filter.toLowerCase())
-  );
+  console.log(contacts);
+
+  const filteredContacts = contacts?.filter(contact => {
+    if (typeof contact.name === 'string' && typeof filter === 'string') {
+      return contact.name.toLowerCase().trim().includes(filter.toLowerCase());
+    } else {
+      return false;
+    }
+  });
 
   if (!filteredContacts?.length && filter.toLowerCase()) {
     Notify.warning('No contacts matching your request', {
       position: 'center-center',
     });
   }
+  console.log(filteredContacts);
 
   const handleDelete = contactId => {
     dispatch(deleteContact(contactId));

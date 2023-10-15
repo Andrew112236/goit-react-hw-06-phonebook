@@ -16,11 +16,11 @@ import filterReducer from '../Redux/Filter';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['contacts'],
+  whitelist: ['phoneBookMark', 'filter'],
 };
 
 const rootReducer = combineReducers({
-  contacts: contactSliceReducer,
+  phoneBookMark: contactSliceReducer,
   filter: filterReducer,
 });
 
@@ -37,5 +37,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-export const getContacts = state => state.contacts.contacts;
-export const getFilter = state => state.filter.filter;

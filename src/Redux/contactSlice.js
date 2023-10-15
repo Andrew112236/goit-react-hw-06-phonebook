@@ -11,25 +11,26 @@ const contactInitialState = {
   filter: '',
 };
 
-//Slice creator for addContact and deleteContact
 const contactSlice = createSlice({
   name: 'phoneBookMark',
   initialState: contactInitialState,
   reducers: {
     addContact: {
       reducer(state, action) {
-        state.items.unshift(action.payload);
+        state.items.push(action.payload);
       },
       prepare(name, number) {
+        const contact = {
+          id: nanoid(7),
+          name,
+          number,
+        };
         return {
-          payload: {
-            id: nanoid(7),
-            name,
-            number,
-          },
+          payload: contact,
         };
       },
     },
+
     deleteContact: {
       reducer(state, action) {
         state.items = state.items.filter(
@@ -51,3 +52,5 @@ const contactSlice = createSlice({
 export const { addContact, deleteContact, filterContact } =
   contactSlice.actions;
 export const contactSliceReducer = contactSlice.reducer;
+export const getContacts = state => state.phoneBookMark.items;
+export const getFilter = state => state.phoneBookMark.filter;
