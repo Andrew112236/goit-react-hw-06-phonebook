@@ -16,7 +16,7 @@ export function ContactList() {
   console.log(contacts);
 
   const filteredContacts = contacts?.filter(contact => {
-    if (typeof contact.name === 'string' && typeof filter === 'string') {
+    if (typeof contact.name === 'string') {
       return contact.name.toLowerCase().trim().includes(filter.toLowerCase());
     } else {
       return false;

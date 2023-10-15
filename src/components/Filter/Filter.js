@@ -9,7 +9,12 @@ export function Filter() {
   const dispatch = useDispatch();
 
   const onChange = e => {
-    dispatch(setFilter(e.target.value));
+    const inputValue = e.target.value;
+    if (typeof inputValue === 'string') {
+      dispatch(setFilter(inputValue));
+    } else {
+      console.error('Input value is not a string:', inputValue);
+    }
   };
 
   return (
